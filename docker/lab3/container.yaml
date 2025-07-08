@@ -1,0 +1,14 @@
+{
+  "metadata": {
+    "name": "busybox-container"
+  },
+  "image": {
+    "image": "busybox"
+  },
+  "command": [
+    "sh",
+    "-c",
+    "echo Hello from CRI-O; sleep 300"
+  ]
+}
+
