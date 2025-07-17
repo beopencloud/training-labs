@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: log-agent
+spec:
+  selector:
+    matchLabels:
+      app: log-agent
+  template:
+    metadata:
+      labels:
+        app: log-agent
+    spec:
+      containers:
+      - name: log-agent
+        image: busybox
+        command:
+          - /bin/sh
+          - -c
+          - while true; do echo "Log from $(hostname)"; sleep 10; done
+        resources:
+          limits:
+            cpu: 50m
+            memory: 32Mi
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+      volumes:
+      - name: varlog
+        hostPath:
+          path: /var/log
+

@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: date-cronjob
+spec:
+  schedule: "*/1 * * * *"  # toutes les minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: show-date
+            image: busybox
+            command:
+              - /bin/sh
+              - -c
+              - echo "Heure actuelle :" && date
+          restartPolicy: OnFailure
+
