@@ -109,6 +109,10 @@ spec:
         - image: wordpress:6.4-apache
           name: wordpress
           env:
+            - name: WORDPRESS_SITEURL
+              value: "http://<to replace>"
+            - name: WORDPRESS_HOME
+              value: "http://<to replace>"
             - name: WORDPRESS_DB_HOST
               value: wordpress-mysql:3306
             - name: WORDPRESS_DB_USER
@@ -143,3 +147,21 @@ spec:
   selector:
     app: wordpress
     tier: frontend
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wordpress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: <to replace>
+    http:
+      paths:
+      - backend:
+          service:
+            name: wordpress
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
