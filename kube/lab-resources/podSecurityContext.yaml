@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: secure-pod
+spec:
+  securityContext:
+    fsGroup: 1001
+  containers:
+  - name: nginx
+    image: bitnami/nginx:latest
+    securityContext:
+      runAsUser: 1001
+      runAsGroup: 1001
+      allowPrivilegeEscalation: false
+    volumeMounts:
+    - name: nginx-tmp
+      mountPath: /opt/bitnami/nginx/tmp
+  volumes:
+  - name: nginx-tmp
+    emptyDir: {}
+
