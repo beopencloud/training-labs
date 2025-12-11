@@ -4,7 +4,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
 spec:
-  storageClassName: gp2
   accessModes:
     - ReadWriteOnce
   resources:
@@ -16,7 +15,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: wordpress-pv-claim
 spec:
-  storageClassName: gp2
   accessModes:
     - ReadWriteOnce
   resources:
@@ -155,7 +153,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: <to replace>
+  - host: wordpress1.boagroup.beopenit.com
     http:
       paths:
       - backend:
