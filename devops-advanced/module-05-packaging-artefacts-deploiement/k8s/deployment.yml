@@ -1,0 +1,51 @@
+# Module 05 — Déploiement Rolling Update
+# FR : Remplacez VOTRE_USERNAME par votre username Docker Hub
+# EN : Replace VOTRE_USERNAME with your Docker Hub username
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-api
+  labels:
+    app: todo-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: todo-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: todo-api
+    spec:
+      containers:
+        - name: todo-api
+          image: VOTRE_USERNAME/todo-api:latest  # TODO: remplacer
+          ports:
+            - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: todo-api-config
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 20
