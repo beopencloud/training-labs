@@ -1,7 +1,0 @@
----
-- name: Créer le répertoire
-  file:
-    path: "{{ app_dir }}"
-    state: directory
-    mode: "0755"
-# TODO: Ajouter les tâches (voir README)

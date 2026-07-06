@@ -1,7 +1,0 @@
----
-app_dir: /tmp/todo-api-deploy
-app_port: 5000
-app_version: "1.0.0"
-docker_image: "votre_username/todo-api"
-app_env: "production"
-log_level: "INFO"
