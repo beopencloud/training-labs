@@ -1,0 +1,27 @@
+name: Quality Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install flask pytest pytest-cov flake8 bandit
+      - run: flake8 app.py                                        # 1. lint
+      - run: pytest test_app.py --cov=app --cov-fail-under=80     # 2. tests unitaires
+      - run: pytest test_integration.py -v                        # 3. tests d'intégration
+      - run: bandit -r app.py -ll                                 # 4. sécurité
+
+      - uses: actions/upload-artifact@v4
+        if: always()                    # même si un contrôle a échoué
+        with:
+          name: rapport-coverage
+          path: coverage.xml

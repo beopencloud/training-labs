@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-api
+spec:
+  replicas: 2                    # 2 copies de l'application
+  selector:
+    matchLabels:
+      app: todo-api
+  template:
+    metadata:
+      labels:
+        app: todo-api
+    spec:
+      containers:
+        - name: todo-api
+          image: VOTRE_USER/todo-api:latest   # <-- remplacez VOTRE_USER
+          ports:
+            - containerPort: 5000
